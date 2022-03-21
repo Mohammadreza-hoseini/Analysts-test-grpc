@@ -8,7 +8,7 @@ service Users {
 message RegisterUserRequest {
   string username = 1;
   string email = 2;
-  int32 password = 3;
+  string password = 3;
 }
 
 message RegisterUserResponse {
@@ -17,7 +17,7 @@ message RegisterUserResponse {
 
 message LoginUserRequest {
   string username = 1;
-  int32 password = 2;
+  string password = 2;
 }
 
 message LoginUserResponse {
