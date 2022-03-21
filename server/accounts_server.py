@@ -21,7 +21,7 @@ class Accounts(Document):
     password = StringField(required=True)
 
 
-class UsersServicer(UsersServicer):
+class UsersService(UsersServicer):
     """Register user function get Accounts fields"""
     def RegisterUser(self, request, context):
         try:
@@ -61,6 +61,8 @@ class UsersServicer(UsersServicer):
                             }, SECRET_KEY, algorithm="HS256")
             """Decode jwt token"""
             decode(token, SECRET_KEY, algorithms=["HS256"])
+            """with this you can get header information"""
+            context.invocation_metadata()
             """If username and password True user get this message"""
             response = LoginUserResponse()
             response.message = f"Login complete. your username is {request.username} and your token is: {token}"
@@ -74,7 +76,7 @@ class UsersServicer(UsersServicer):
 
 def main():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    add_UsersServicer_to_server(UsersServicer(), server)
+    add_UsersServicer_to_server(UsersService(), server)
     """Server port"""
     server.add_insecure_port('[::]:50051')
     server.start()
